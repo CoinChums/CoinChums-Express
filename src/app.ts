@@ -1,5 +1,5 @@
 import Express from "express";
-import { CONFIG } from "./config";
+import { CONFIG } from "./global/config";
 
 const app = Express();
 
@@ -21,5 +21,3 @@ export const startServer = async () => {
     console.error("Server failed at startup: ", error);
   }
 };
-
-startServer();
