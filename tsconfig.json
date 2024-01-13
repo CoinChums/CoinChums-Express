@@ -2,10 +2,11 @@
   "compilerOptions": {
     "target": "es2016",
     "skipLibCheck": true,
-    "module": "commonjs",
+    "module": "CommonJS",
     "outDir": "./build",
     "esModuleInterop": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
   }
 }
