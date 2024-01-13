@@ -1,17 +1,19 @@
-import Express from "express";
-import { CONFIG } from "./global/config";
-import { Log } from "./utils/Logger";
+const express = require("express");
+const { CONFIG } = require("./global/config");
+const { Log } = require("./utils/Logger");
+const path = require("path");
 
-const app = Express();
+const app = express();
 
 // MiddleWares
-app.use(Express.json());
-app.use(Express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 /** Start Express App */
 export const startServer = async () => {
   Log.debug("----------------- Server Started -----------------");
   try {
+    app.use(express.static(path.join(__dirname, "public")));
     app.listen(CONFIG.port, () => {
       console.clear();
       Log.debug(
