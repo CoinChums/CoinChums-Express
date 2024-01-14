@@ -1,3 +1,4 @@
+import { registerRouters } from "./router";
 const express = require("express");
 const { CONFIG } = require("./global/config");
 const { Log } = require("./utils/Logger");
@@ -13,6 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 export const startServer = async () => {
   Log.debug("----------------- Server Started -----------------");
   try {
+    registerRouters(app);
     app.use(express.static(path.join(__dirname, "public")));
     app.listen(CONFIG.port, () => {
       console.clear();
