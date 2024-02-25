@@ -58,6 +58,19 @@ $ yarn run test:e2e
 $ yarn run test:cov
 ```
 
+## Deploy to vercel using vercel cli
+
+```bash
+npm i -g vercel
+
+vercel .
+Set up and deploy “~/myFiles/repos/CoinChums-Express”? [Y/n] y
+Which scope do you want to deploy to? [znjs]
+Link to existing project? [y/N] y
+What’s the name of your existing project? [coinchums-express]
+
+```
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
@@ -71,3 +84,7 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+```
+
+```
