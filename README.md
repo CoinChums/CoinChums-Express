@@ -29,46 +29,33 @@
 ## Installation
 
 ```bash
-$ yarn install
+$ npm install
 ```
 
 ## Running the app
 
 ```bash
 # development
-$ yarn run start
+$ npm run start
 
 # watch mode
-$ yarn run start:dev
+$ npm run start:dev
 
 # production mode
-$ yarn run start:prod
+$ npm run start:prod
 ```
 
 ## Test
 
 ```bash
 # unit tests
-$ yarn run test
+$ npm run test
 
 # e2e tests
-$ yarn run test:e2e
+$ npm run test:e2e
 
 # test coverage
-$ yarn run test:cov
-```
-
-## Deploy to vercel using vercel cli
-
-```bash
-npm i -g vercel
-
-vercel .
-Set up and deploy “~/myFiles/repos/CoinChums-Express”? [Y/n] y
-Which scope do you want to deploy to? [znjs]
-Link to existing project? [y/N] y
-What’s the name of your existing project? [coinchums-express]
-
+$ npm run test:cov
 ```
 
 ## Support
@@ -84,7 +71,3 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
-
-```
-
-```

@@ -1,12 +1,19 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
-import { TransactionModule } from './transaction/transaction.module';
-import { GroupsModule } from './groups/groups.module';
+import { UserModule } from './user/user.module';
+import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [AuthModule, TransactionModule, GroupsModule],
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: '.env',
+      isGlobal: true,
+    }),
+    MongooseModule.forRoot(process.env.MONGO_CONNECTION_URI),
+    UserModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
