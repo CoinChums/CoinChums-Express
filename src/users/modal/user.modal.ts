@@ -1,4 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
+
+export type UserDocument = HydratedDocument<User>;
 
 @Schema({
   timestamps: {
@@ -10,11 +13,9 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 })
 export class User {
   @Prop()
-  userId: number;
+  userId: string;
   @Prop()
-  username: string;
-  @Prop()
-  password: string;
+  name: string;
   @Prop()
   email: string;
   @Prop()
@@ -22,17 +23,16 @@ export class User {
   @Prop()
   encodedToken: string | null;
   @Prop()
-  groupIds: Array<number>;
+  groupIds: Array<string>;
   @Prop()
   couponId: string | null;
 
-  constructor(name: string, email: string, password: string) {
-    this.username = name;
+  constructor(name: string, email: string, encodedToken: string) {
+    this.name = name;
     this.email = email;
     this.deletedAt = null;
-    this.encodedToken = password;
+    this.encodedToken = encodedToken;
     this.groupIds = [];
-    this.password = password;
     this.couponId = null;
   }
 }
