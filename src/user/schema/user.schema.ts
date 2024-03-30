@@ -18,6 +18,8 @@ export class User {
   @Prop()
   email: string;
   @Prop()
+  password: string;
+  @Prop()
   deletedAt: Date | null;
   @Prop()
   encodedToken: string | null;
@@ -29,6 +31,7 @@ export class User {
   constructor(name: string, email: string, password: string) {
     this.username = name;
     this.email = email;
+    this.password = '';
     this.deletedAt = null;
     this.encodedToken = password;
     this.groupIds = [];
@@ -38,3 +41,10 @@ export class User {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+UserSchema.set('toJSON', {
+  transform: function (doc, ret) {
+    delete ret.password;
+    return ret;
+  },
+});
