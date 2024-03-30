@@ -4,6 +4,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './modal/user.modal';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import * as jwt from 'jsonwebtoken';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -12,7 +14,7 @@ export class UsersService {
     private userModel: Model<User>,
   ) {}
 
-  private users = [];
+  private users: User[] = [];
 
   getAll() {
     return this.users;
@@ -23,20 +25,23 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException('User not found');
     }
-    return user;
+    return { data: user };
   }
 
   async create(userData: CreateUserDto) {
+    const encodeData = { name: userData.name, email: userData.email };
+    const encodedToken = jwt.sign(encodeData, process.env.JWT_SECRET_KEY);
+    const hashedPassword = await bcrypt.hash(userData.password, 10);
     const user = await this.userModel.create({
       name: userData.name,
       email: userData.email,
-      encodedToken: 'sample token',
+      password: hashedPassword,
+      encodedToken,
       groupIds: [],
       couponId: '',
       deletedAt: null,
     });
-    console.log(user, 'user');
-    return user;
+    return { data: user };
   }
 
   update(userId: string, userData: UpdateUserDto) {

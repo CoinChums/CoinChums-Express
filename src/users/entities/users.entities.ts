@@ -5,7 +5,7 @@ export type UserEntity = {
   encodedToken: string;
   GroupIds: string[];
   couponId: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date | null;
 };
