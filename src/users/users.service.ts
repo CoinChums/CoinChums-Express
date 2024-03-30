@@ -16,6 +16,10 @@ export class UsersService {
 
   private users: User[] = [];
 
+  getAll() {
+    return this.users;
+  }
+
   async getOne(userId: string) {
     const user = await this.userModel.findById(userId);
     if (!user) {

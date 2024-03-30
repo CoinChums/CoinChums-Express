@@ -7,6 +7,11 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
+  @Get()
+  getUsers() {
+    return this.userService.getAll();
+  }
+
   @Get(':id')
   async getUser(@Param('id') movieId: string) {
     return await this.userService.getOne(movieId);
