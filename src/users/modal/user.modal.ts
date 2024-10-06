@@ -13,8 +13,6 @@ export type UserDocument = HydratedDocument<User>;
 })
 export class User {
   @Prop()
-  userId: string;
-  @Prop()
   name: string;
   @Prop()
   email: string;
@@ -28,16 +26,6 @@ export class User {
   groupIds: Array<string>;
   @Prop()
   couponId: string | null;
-
-  constructor(name: string, email: string, encodedToken: string) {
-    this.name = name;
-    this.email = email;
-    this.password = '';
-    this.deletedAt = null;
-    this.encodedToken = encodedToken;
-    this.groupIds = [];
-    this.couponId = null;
-  }
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

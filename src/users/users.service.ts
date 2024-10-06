@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './modal/user.modal';
@@ -6,6 +10,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as jwt from 'jsonwebtoken';
 import * as bcrypt from 'bcrypt';
+import { LoginUserDto } from './dto/login-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -13,12 +18,6 @@ export class UsersService {
     @InjectModel(User.name)
     private userModel: Model<User>,
   ) {}
-
-  private users: User[] = [];
-
-  getAll() {
-    return this.users;
-  }
 
   async getOne(userId: string) {
     const user = await this.userModel.findById(userId);
@@ -28,7 +27,26 @@ export class UsersService {
     return { data: user };
   }
 
+  async login(userData: LoginUserDto) {
+    const user = await this.userModel.findOne({ email: userData.email });
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    const isPasswordMatch = await bcrypt.compare(
+      userData.password,
+      user.password,
+    );
+    if (!isPasswordMatch) {
+      throw new NotFoundException('Invalid password');
+    }
+    return { data: user };
+  }
+
   async create(userData: CreateUserDto) {
+    const foundUser = await this.userModel.findOne({ email: userData.email });
+    if (foundUser) {
+      throw new ConflictException('User already exists');
+    }
     const encodeData = { name: userData.name, email: userData.email };
     const encodedToken = jwt.sign(encodeData, process.env.JWT_SECRET_KEY);
     const hashedPassword = await bcrypt.hash(userData.password, 10);
@@ -45,10 +63,6 @@ export class UsersService {
   }
 
   update(userId: string, userData: UpdateUserDto) {
-    const index = this.users.findIndex((user) => user.userId === userId);
-    if (index < 0) {
-      throw new NotFoundException(`User #${userId} not found`);
-    }
-    this.users[index] = { ...this.users[index], ...userData };
+    console.log(userId, userData);
   }
 }
